@@ -21,17 +21,17 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         {
             var transaction = new Transaction
             {
-                UserId = "test@balta.io",
+                UserId = request.UserId,
                 CategoryId = request.CategoryId,
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.Now.Date,
                 Amount = request.Amount,
                 PaidOrReceivedAt = request.PaidOrReceivedAt,
                 Title = request.Title,
                 Type = request.Type
             };
 
-            context.Transactions.AddAsync(transaction);
-            context.SaveChangesAsync();
+            await context.Transactions.AddAsync(transaction);
+            await context.SaveChangesAsync();
 
             return new Response<Transaction?>(transaction, 201, "Transação criada com sucesso!");
         }
@@ -43,7 +43,35 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
 
     public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (request is { Type: ETransactionType.Withdraw, Amount: > 0 })
+            {
+                request.Amount *= -1;
+            }
+
+            var transaction = await context.Transactions.FirstOrDefaultAsync(transaction => transaction.Id == request.Id && transaction.UserId == request.UserId);
+
+            if (transaction is null)
+            {
+                return new Response<Transaction?>(null, 404, $"Ops, não foi possível encontrar a transação {request.Title}.");
+            }
+
+            transaction.Title = request.Title;
+            transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
+            transaction.Type = request.Type;
+            transaction.Amount = request.Amount;
+            transaction.CategoryId = request.CategoryId;
+
+            context.Transactions.Update(transaction);
+            await context.SaveChangesAsync();
+
+            return new Response<Transaction?>(transaction);
+        }
+        catch
+        {
+            return new Response<Transaction?>(null, 500, $"Ops, não foi possível atualizar a transação {request.Title}. Por favor, tente novamente mais tarde.");
+        }
     }
 
     public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
