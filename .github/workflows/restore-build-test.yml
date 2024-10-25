@@ -1,0 +1,20 @@
+name: Build Solution
+
+on:
+  workflow_call:
+    inputs:
+      solution-path:
+        required: true
+        type: string
+
+jobs:
+  restore-and-build:
+    uses: ./.github/workflows/restore-build.yml
+    with:
+      solution-path: ./unit-tests/Balta.sln
+  test:
+    needs: restore-and-build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run Test
+      run: dotnet test ${{ inputs.solution-path }}
