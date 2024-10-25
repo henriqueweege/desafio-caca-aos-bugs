@@ -6,39 +6,19 @@ on:
       - '**'
 
 jobs:
-  restore-dima:
-    uses: ./.github/workflows/restore.yml
+  restore-and-build-dima:
+    uses: ./.github/workflows/restore-and-build.yml
     with:
       solution-path: ./bugs/Dima.sln
 
-  restore-balta:
-    uses: ./.github/workflows/restore.yml
-    with:
-      solution-path: ./unit-tests/Balta.sln
-
-  build-dima:
-    needs: restore-dima
-    uses: ./.github/workflows/build.yml
-    with:
-      solution-path: ./bugs/Dima.sln
-
-  build-balta:
-    needs: restore-balta
-    uses: ./.github/workflows/build.yml
+  restore-and-build-balta:
+    uses: ./.github/workflows/restore-and-build.yml
     with:
       solution-path: ./unit-tests/Balta.sln
 
   test:
     runs-on: ubuntu-latest
-    needs: [build-dima, build-balta]
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    
+    needs: [restore-and-build-balta]
+    steps:    
     - name: Run Tests
       run: dotnet test ./unit-tests/Balta.sln

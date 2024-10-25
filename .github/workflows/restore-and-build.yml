@@ -1,4 +1,4 @@
-name: Restore Solution
+name: Build Solution
 
 on:
   workflow_call:
@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  restore:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -21,3 +21,6 @@ jobs:
     
     - name: Restore Solution
       run: dotnet restore ${{ inputs.solution-path }}
+    
+    - name: Build Solution
+      run: dotnet build --no-restore ${{ inputs.solution-path }}
