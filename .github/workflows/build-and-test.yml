@@ -12,15 +12,15 @@ jobs:
   restore-and-build-dima:
     uses: ./.github/workflows/restore-and-build.yml
     with:
-      solution-path: $DimaSlnPath
+      solution-path: ${{DimaSlnPath}}
 
   restore-and-build-balta:
     uses: ./.github/workflows/restore-and-build.yml
     with:
-      solution-path: $BaltaSlnPath
+      solution-path: ${{BaltaSlnPath}}
 
   test:
     needs: [restore-and-build-balta]
     uses: ./.github/workflows/test.yml
     with:
-        solution-path: $BaltaSlnPath
+        solution-path: ${{BaltaSlnPath}}
