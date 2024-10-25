@@ -17,7 +17,7 @@ public sealed record Tracker : ValueObject
     #region Factories
 
     public static Tracker ShouldCreate(IDateTimeProvider dateTimeProvider)
-        => new(dateTimeProvider.UtcNow, dateTimeProvider.UtcNow);
+        => new(dateTimeProvider.ExpirationDate, dateTimeProvider.ExpirationDate);
 
     #endregion
 

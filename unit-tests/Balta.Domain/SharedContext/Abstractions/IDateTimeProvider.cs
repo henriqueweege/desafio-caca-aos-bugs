@@ -4,7 +4,7 @@ public interface IDateTimeProvider
 {
     #region Properties
 
-    DateTime UtcNow { get; }
+    DateTime ExpirationDate { get; }
 
     #endregion
 }

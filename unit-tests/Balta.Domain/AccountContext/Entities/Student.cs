@@ -51,7 +51,7 @@ public sealed class Student : Entity, IAggregateRoot
         var tracker = Tracker.ShouldCreate(dateTimeProvider);
         var student = new Student(Guid.NewGuid(), name, email, user, tracker);
 
-        student.RaiseDomainEvent(new AccountCreatedDomainEvent(email));
+        student.RaiseDomainEvent(new AccountCreatedDomainEvent((string)email));
 
         return student;
     }

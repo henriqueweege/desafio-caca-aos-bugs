@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using Balta.Domain.AccountContext.ValueObjects.Exceptions;
+using Balta.Domain.SharedContext.Abstractions;
 using Balta.Domain.SharedContext.ValueObjects;
 
 namespace Balta.Domain.AccountContext.ValueObjects;
@@ -10,25 +11,27 @@ public record Password : ValueObject
 
     private const int MinLength = 8;
     private const int MaxLength = 48;
-    private const string Valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    private const string UpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string LowerCase = "abcdefghijklmnopqrstuvwxyz";
+    private const string Numbers = "1234567890";
     private const string Special = "!@#$%ˆ&*(){}[];";
 
     #endregion
 
     #region Constructors
 
-    private Password(string hash)
+    private Password(string hash, VerificationCode verificationCode)
     {
         Hash = hash;
-        ExpiresAtUtc = null;
         MustChange = false;
+        VerificationCode = verificationCode;
     }
 
     #endregion
 
     #region Factories
 
-    public static Password ShouldCreate(string plainText)
+    public static Password ShouldCreate(string plainText, IDateTimeProvider? dateTimeProvider = null)
     {
         if (string.IsNullOrEmpty(plainText))
             throw new InvalidPasswordException("Password cannot be null or empty");
@@ -44,7 +47,9 @@ public record Password : ValueObject
 
         var hash = ShouldHashPassword(plainText);
         
-        return new Password(hash);
+        var verificationCode = VerificationCode.ShouldCreate(dateTimeProvider);
+
+        return new Password(hash, verificationCode);
     }
 
     #endregion
@@ -52,8 +57,8 @@ public record Password : ValueObject
     #region Properties
 
     public string Hash { get; }
-    public DateTime? ExpiresAtUtc { get; }
-    public bool MustChange { get; }
+    public bool MustChange { get; set; }
+    public VerificationCode VerificationCode { get; }
 
     #endregion
 
@@ -64,17 +69,17 @@ public record Password : ValueObject
         bool includeSpecialChars = true,
         bool upperCase = true)
     {
-        var chars = includeSpecialChars ? (Valid + Special) : Valid;
-        var startRandom = upperCase ? 26 : 0;
+        string chars = GetApplicableChars(includeSpecialChars, upperCase);
         var index = 0;
         var res = new char[length];
         var rnd = new Random();
 
         while (index < length)
-            res[index++] = chars[rnd.Next(startRandom, chars.Length)];
+            res[index++] = chars[rnd.Next(0, chars.Length-1)];
 
         return new string(res);
     }
+
 
     public static bool ShouldMatch(
         string hash,
@@ -83,6 +88,7 @@ public record Password : ValueObject
         int iterations = 10000,
         char splitChar = '.')
     {
+
         password += Configuration.Api.PasswordSalt;
 
         var parts = hash.Split(splitChar, 3);
@@ -106,6 +112,12 @@ public record Password : ValueObject
         return keyToCheck.SequenceEqual(key);
     }
 
+    public void ShouldVerify() => VerificationCode.ShouldVerify(Hash);
+    public void PasswordMustChange()
+    {
+        VerificationCode.Expired();
+        MustChange = true;
+    }
     #endregion
 
     #region Private Methods
@@ -137,7 +149,7 @@ public record Password : ValueObject
 
     #region Operators
 
-    public static implicit operator Password(string plainTextPassword) => new(plainTextPassword);
+    public static implicit operator Password(string plainTextPassword) => ShouldCreate(plainTextPassword);
     public static implicit operator string(Password password) => password.Hash;
 
     #endregion
@@ -146,5 +158,13 @@ public record Password : ValueObject
 
     public override string ToString() => Hash;
 
+    private static string GetApplicableChars(bool includeSpecialChars, bool upperCase)
+    {
+        var chars = Numbers;
+        chars += includeSpecialChars ? Special : "";
+        chars += upperCase ? UpperCase : LowerCase;
+        return chars;
+    }
     #endregion
+
 }
