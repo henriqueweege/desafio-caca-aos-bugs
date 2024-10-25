@@ -27,7 +27,7 @@ public partial record Email : ValueObject
 
     #region Factories
 
-    public static Email ShouldCreate(string address, IDateTimeProvider dateTimeProvider)
+    public static Email ShouldCreate(string address, IDateTimeProvider? dateTimeProvider = null)
     {
         address = address.Trim();
         address = address.ToLower();
@@ -52,14 +52,17 @@ public partial record Email : ValueObject
 
     #region Methods
 
-    public void ShouldVerify(string verificationCode) => VerificationCode.ShouldVerify(verificationCode);
+    public void ShouldVerify() => VerificationCode.ShouldVerify(Hash);
 
     #endregion
 
     #region Operators
 
-    public static implicit operator string(Email email)
+    public static explicit operator string(Email email)
         => email.ToString();
+
+    public static explicit operator Email(string asString)
+        => ShouldCreate(asString);
 
     #endregion
 
