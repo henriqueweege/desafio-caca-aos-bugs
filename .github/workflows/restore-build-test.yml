@@ -9,10 +9,9 @@ on:
 
 jobs:
   restore-and-build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run Test
-      run: dotnet test ${{ inputs.solution-path }}
+    uses: ./.github/workflows/restore-build.yml
+    with:
+      solution-path: ./unit-tests/Balta.sln
   test:
     runs-on: ubuntu-latest
     steps:
