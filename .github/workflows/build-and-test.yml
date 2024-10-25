@@ -1,7 +1,7 @@
 name: Build and Test
 env:
-  BaltaSlnPath: ./unit-tests/Balta.sln
-  DimaSlnPath: ./bugs/Dima.sln
+  BaltaSlnPath: "./unit-tests/Balta.sln"
+  DimaSlnPath: "./bugs/Dima.sln"
 
 on:
   push:
