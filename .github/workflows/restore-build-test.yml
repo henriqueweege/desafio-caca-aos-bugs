@@ -14,7 +14,7 @@ jobs:
     with:
       solution-path: ${{ inputs.solution-path }}
   test:
-    needs: restore-and-build
+    needs: build-and-test
     runs-on: ubuntu-latest
     steps:
     - name: Run Test
