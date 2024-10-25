@@ -11,7 +11,7 @@ jobs:
   restore-and-build:
     uses: ./.github/workflows/restore-and-build.yml
     with:
-      solution-path: "${{ inputs.solution-path }}"
+      solution-path: ./unit-tests/Balta.sln
   test:
     runs-on: ubuntu-latest
     steps:
