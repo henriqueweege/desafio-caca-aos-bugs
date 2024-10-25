@@ -8,10 +8,7 @@ on:
         type: string
 
 jobs:
-  restore-and-build:
-    uses: ./.github/workflows/restore-and-build.yml
-    with:
-      solution-path: ${{ inputs.solution-path }}
+
   test:
     runs-on: ubuntu-latest
     steps:
