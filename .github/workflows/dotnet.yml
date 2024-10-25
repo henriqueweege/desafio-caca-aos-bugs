@@ -8,17 +8,32 @@ on:
     branches: [ "main" ]
 
 jobs:
+  
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET
+    - name: Build Solutions
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies
+    - name: Restore Dima.sln
       run: dotnet restore ./bugs/Dima.sln
-    - name: Build
+    - name: Restore Balta.sln
+      run: dotnet restore ./unit-tests/Balta.sln
+    - name: Build Dima.sln
       run: dotnet build --no-restore ./bugs/Dima.sln
+    - name: Build Balta.sln
+      run: dotnet build --no-restore ./unit-tests/Balta.sln
+  
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Dima.sln
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Run Tests
+      run: dotnet test ./unit-tests/Balta.sln
+
