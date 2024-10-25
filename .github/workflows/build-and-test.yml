@@ -17,8 +17,7 @@ jobs:
       solution-path: ./unit-tests/Balta.sln
 
   test:
-    runs-on: ubuntu-latest
     needs: [restore-and-build-balta]
-    steps:    
-    - name: Run Tests
-      run: dotnet test ./unit-tests/Balta.sln
+    uses: ./.github/workflows/test.yml
+    with:
+        solution-path: ./unit-tests/Balta.sln
