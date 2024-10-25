@@ -21,4 +21,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./bugs/Dima.sln
     - name: Build
-      run: dotnet build --no-restore .bugs/Dima.sln
+      run: dotnet build --no-restore ./bugs/Dima.sln
