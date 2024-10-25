@@ -9,9 +9,9 @@ jobs:
   restore-build-dima:
     uses: ./.github/workflows/restore-build.yml
     with:
-      solution-path: ./bugs/Dima.sln
+      solution-path: ./bugs
 
   restore-build-test-balta:
     uses: ./.github/workflows/restore-build-test.yml
     with:
-      solution-path: ./unit-tests/Balta.sln
+      solution-path: ./unit-tests
