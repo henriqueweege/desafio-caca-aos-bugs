@@ -17,5 +17,11 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
+
+    - uses: actions/download-artifact@master
+      with:
+        name: my-artifact
+        path: path/to/artifact
     - name: Run Test
-      run: dotnet test ${{ inputs.solution-path }}
+      run: dotnet test path/to/artifact

@@ -11,6 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - run: mkdir -p path/to/artifact
+    - uses: actions/upload-artifact@master
+      with:
+        name: my-artifact
+        path: path/to/artifact
     - name: Checkout Code
       uses: actions/checkout@v4
     
