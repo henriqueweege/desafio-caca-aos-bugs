@@ -1,7 +1,4 @@
 name: Build and Test
-env:
-  BALTA_SLN_PATH: "./unit-tests/Balta.sln"
-  DIMA_SLN_PATH: "./bugs/Dima.sln"
 
 on:
   push:
@@ -9,12 +6,12 @@ on:
       - '**'
 
 jobs:
-  restore-and-build-dima:
+  restore-build-dima:
     uses: ./.github/workflows/restore-build.yml
     with:
       solution-path: ./bugs/Dima.sln
 
-  restore-and-build-test-balta:
+  restore-build-test-balta:
     uses: ./.github/workflows/restore-build-test.yml
     with:
       solution-path: ./unit-tests/Balta.sln
