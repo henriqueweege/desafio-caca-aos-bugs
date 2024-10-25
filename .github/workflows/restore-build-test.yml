@@ -13,6 +13,7 @@ jobs:
     with:
       solution-path: ./unit-tests/Balta.sln
   test:
+    needs: restore-and-build
     runs-on: ubuntu-latest
     steps:
     - name: Run Test
