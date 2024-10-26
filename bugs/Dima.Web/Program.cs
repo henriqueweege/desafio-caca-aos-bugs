@@ -10,9 +10,9 @@ using MudBlazor.Services;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
-        var builder = WebAssemblyHostBuilder.CreateDefault(args);
+        var builder = WebAssemblyHostBuilder.CreateDefault(new string[0]);
 
         Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
         Configuration.StripePublicKey = builder.Configuration.GetValue<string>("StripePublicKey") ?? string.Empty;
