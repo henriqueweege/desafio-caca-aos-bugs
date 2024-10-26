@@ -16,8 +16,8 @@ public class VerificationCodeTest
         _dateTimeProviderMock.Setup(x => x.ExpirationDate).Returns(DateTime.UtcNow);
     }
 
-    [Fact]
-    public void GivenValidIDateTimeProvider_ShouldGenerate_ShouldReturnVerificationCode()//ShouldGenerateVerificationCode
+    [Fact(DisplayName = "ShouldGenerateVerificationCode")]
+    public void GivenValidIDateTimeProvider_ShouldGenerate_ShouldReturnVerificationCode()
     {
         // Arrange
         // Act
@@ -27,8 +27,8 @@ public class VerificationCodeTest
         verificationCode.Should().NotBeNull();
     }
 
-    [Fact]
-    public void GivenNoDateTimeProvider_ShouldGenerate_ShouldReturnVerificationCode()//ShouldGenerateVerificationCode
+    [Fact(DisplayName = "ShouldGenerateVerificationCode")]
+    public void GivenNoDateTimeProvider_ShouldGenerate_ShouldReturnVerificationCode()
     {
         // Arrange
         // Act
@@ -38,8 +38,8 @@ public class VerificationCodeTest
         verificationCode.Should().NotBeNull();
     }
 
-    [Fact]
-    public void GivenValidVerificationCode_ExpirationDate_ShouldBeFutureDate()//ShouldGenerateExpiresAtInFuture
+    [Fact(DisplayName = "ShouldGenerateExpiresAtInFuture")]
+    public void GivenValidVerificationCode_ExpirationDate_ShouldBeFutureDate()
     {
         // Arrange
         var verificationCode = VerificationCode.ShouldCreate(_dateTimeProviderMock.Object);
@@ -51,8 +51,8 @@ public class VerificationCodeTest
         expirationDate.Should().BeAfter(DateTime.UtcNow);
     }
 
-    [Fact]
-    public void GivenValidVerificationCode_VerifiedAt_ShouldBeNull()//ShouldGenerateVerifiedAtAsNull
+    [Fact(DisplayName = "ShouldGenerateVerifiedAtAsNull")]
+    public void GivenValidVerificationCode_VerifiedAt_ShouldBeNull()
     {
         // Arrange
         var verificationCode = VerificationCode.ShouldCreate(_dateTimeProviderMock.Object);
@@ -62,8 +62,8 @@ public class VerificationCodeTest
         verificationCode.VerifiedAtUtc.Should().BeNull();
     }
 
-    [Fact]
-    public void GivenValidVerificationCode_IsActive_ShouldReturnFalse() //ShouldBeInactiveWhenCreated
+    [Fact(DisplayName = "ShouldBeInactiveWhenCreated")]
+    public void GivenValidVerificationCode_IsActive_ShouldReturnFalse() 
     {
         // Arrange
         var verificationCode = VerificationCode.ShouldCreate(_dateTimeProviderMock.Object);
@@ -73,8 +73,8 @@ public class VerificationCodeTest
         verificationCode.IsActive.Should().BeFalse();
     }
 
-    [Fact]
-    public void GivenExpiredVerificationCode_ShouldVerify_ShouldThrowException() //ShouldFailIfExpired ShouldFailIfIsNotActive
+    [Fact(DisplayName = "ShouldFailIfExpired ShouldFailIfIsNotActive")]
+    public void GivenExpiredVerificationCode_ShouldVerify_ShouldThrowException() 
     {
         // Arrange
         _dateTimeProviderMock.Setup(x=>x.ExpirationDate).Returns(DateTime.UtcNow.AddDays(-1));
@@ -84,14 +84,15 @@ public class VerificationCodeTest
         var verify = () => verificationCode.ShouldVerify(Guid.NewGuid().ToString());
 
         // Assert
-        verify.Should().ThrowExactly<InvalidVerificationCodeException>();
+        verify.Should()
+            .ThrowExactly<InvalidVerificationCodeException>();
     }
 
-    [Theory]
+    [Theory(DisplayName = "ShouldFailIfCodeIsInvalid ShouldFailIfCodeIsLessThanSixChars")]
     [InlineData("")]
     [InlineData(" ")]
     [InlineData("xpto")]
-    public void GivenInvalidCode_ShouldVerify_ShouldThrowException(string invalidCode)//ShouldFailIfCodeIsInvalid ShouldFailIfCodeIsLessThanSixChars
+    public void GivenInvalidCode_ShouldVerify_ShouldThrowException(string invalidCode)
     {
         // Arrange
         var verificationCode = VerificationCode.ShouldCreate(_dateTimeProviderMock.Object);
@@ -101,12 +102,13 @@ public class VerificationCodeTest
 
 
         // Assert
-        verify.Should().ThrowExactly<InvalidVerificationCodeException>();
+        verify.Should()
+            .ThrowExactly<InvalidVerificationCodeException>();
 
     }
 
-    [Fact]
-    public void GivenAlreadyVerifiedCode_ShouldVerify_ShouldThrowException()//ShouldFailIfIsAlreadyVerified
+    [Fact(DisplayName = "ShouldFailIfIsAlreadyVerified")]
+    public void GivenAlreadyVerifiedCode_ShouldVerify_ShouldThrowException()
     {
         // Arrange
         var code = "xptoxpto";
@@ -118,6 +120,7 @@ public class VerificationCodeTest
 
 
         // Assert
-        verify.Should().ThrowExactly<InvalidVerificationCodeException>();
+        verify.Should()
+            .ThrowExactly<InvalidVerificationCodeException>();
     }
 }
