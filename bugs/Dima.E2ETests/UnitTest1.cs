@@ -31,8 +31,8 @@ namespace Dima.E2ETests
         public async Task ValidateTheMessageIsDisplayed()
         {
             driver.Navigate().GoToUrl("http://localhost:5028/comecar");
-            await Task.Delay(5000);
-            driver.FindElement(By.Id("e-mail")).SendKeys("teste@mail.com");
+            await Task.Delay(10000);
+            driver.FindElement(By.Id("email")).SendKeys("teste@mail.com");
             driver.FindElement(By.Id("password")).SendKeys("xpto");
             driver.FindElement(By.Id("submit")).Click();
             await Task.Delay(2000);
