@@ -37,9 +37,15 @@ namespace Dima.E2ETests
 
             if (ElementExists("email"))
             {
+                Console.WriteLine("fond email");
                 await Task.Delay(3000);
                 driver.FindElement(By.Id("email")).SendKeys("teste@mail.com");
                 await Task.Delay(3000);
+            }
+            else
+            {
+                Assert.Fail("Something went wrong in EMAIL");
+
             }
 
 
@@ -49,20 +55,32 @@ namespace Dima.E2ETests
                 driver.FindElement(By.Id("password")).SendKeys("xpto");
                 await Task.Delay(3000);
             }
+            else
+            {
+                Assert.Fail("Something went wrong in PASSWORD");
+
+            }
 
             if (ElementExists("submit"))
             {
+                Console.WriteLine("fond button");
+
                 await Task.Delay(3000);
                 driver.FindElement(By.Id("password")).SendKeys("xpto");
                 var submit = driver.FindElement(By.Id("submit"));
                 await Task.Delay(3000);
                 submit.Click();
                 await Task.Delay(2000);
+                Console.WriteLine($"driver.Url {driver.Url}");
+
                 Assert.Equal(driver.Url, "http://localhost:5028/comecar");
-                return;
+            }
+            else
+            {
+                Assert.Fail("Something went wrong in SUBMIT");
+
             }
 
-            Assert.Fail();
         }
 
 
