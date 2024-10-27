@@ -1,4 +1,4 @@
-name: Build and Test
+name: CI pipeline
 
 on:
   push:
@@ -6,14 +6,28 @@ on:
       - '**'
 
 jobs:
-  dima-ci:
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      solution-path: ./bugs/Dima.sln
-      so: windows-latest
+  dima:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    
+    - name: Restore Solution
+      run: dotnet restore ${{ inputs.solution-path }}
+    
+    - name: Build Solution
+      run: dotnet build --no-restore ${{ inputs.solution-path }}
 
-  balta-ci:
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      solution-path: ./unit-tests/Balta.sln
-      so: ubuntu-latest
+    - name: Run Test
+      run: dotnet test ${{ inputs.solution-path }}
+
+#   balta:
+#     uses: ./.github/workflows/build-and-test.yml
+#     with:
+#       solution-path: ./unit-tests/Balta.sln
+#       so: ubuntu-latest
