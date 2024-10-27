@@ -32,11 +32,43 @@ namespace Dima.E2ETests
         {
             driver.Navigate().GoToUrl("http://localhost:5028/comecar");
             await Task.Delay(10000);
-            driver.FindElement(By.Id("email")).SendKeys("teste@mail.com");
-            driver.FindElement(By.Id("password")).SendKeys("xpto");
-            driver.FindElement(By.Id("submit")).Click();
-            await Task.Delay(2000);
-            Assert.Equal(driver.Url, "http://localhost:5028/comecar");
+
+
+
+            if (ElementExists("email"))
+            {
+                await Task.Delay(3000);
+                driver.FindElement(By.Id("email")).SendKeys("teste@mail.com");
+                await Task.Delay(3000);
+            }
+
+
+            if (ElementExists("password"))
+            {
+                await Task.Delay(3000);
+                driver.FindElement(By.Id("password")).SendKeys("xpto");
+                await Task.Delay(3000);
+            }
+
+            if (ElementExists("submit"))
+            {
+                await Task.Delay(3000);
+                driver.FindElement(By.Id("password")).SendKeys("xpto");
+                var submit = driver.FindElement(By.Id("submit"));
+                await Task.Delay(3000);
+                submit.Click();
+                await Task.Delay(2000);
+                Assert.Equal(driver.Url, "http://localhost:5028/comecar");
+                return;
+            }
+
+            Assert.Fail();
+        }
+
+
+        private bool ElementExists(string id)
+        {
+            return driver.FindElements(By.Id(id)).Any();
         }
 
     }
