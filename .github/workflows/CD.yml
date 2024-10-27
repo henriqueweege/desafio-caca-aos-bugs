@@ -7,11 +7,21 @@ on:
 
 jobs:
   restore-build-dima:
-    uses: ./.github/workflows/restore-build.yml
+    uses: ./.github/workflows/build-and-test.yml
     with:
+<<<<<<< Updated upstream
       solution-path: ./bugs/
+=======
+      solution-path: ./bugs/Dima.sln
+      so: windows-latest
+>>>>>>> Stashed changes
 
   restore-build-test-balta:
-    uses: ./.github/workflows/restore-build-test.yml
+    uses: ./.github/workflows/build-and-test.yml
     with:
+<<<<<<< Updated upstream
       solution-path: ./unit-tests/
+=======
+      solution-path: ./unit-tests/Balta.sln
+      so: ubuntu-latest
+>>>>>>> Stashed changes
