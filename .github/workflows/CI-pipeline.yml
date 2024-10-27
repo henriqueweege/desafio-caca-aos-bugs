@@ -18,13 +18,17 @@ jobs:
         dotnet-version: 8.0.x
     
     - name: Restore Solution
-      run: dotnet restore ${{ inputs.solution-path }}
+      run: dotnet restore ./bugs/Dima.sln
     
     - name: Build Solution
-      run: dotnet build --no-restore ${{ inputs.solution-path }}
+      run: dotnet build --no-restore ./bugs/Dima.sln
 
     - name: Run Test
-      run: dotnet test ${{ inputs.solution-path }}
+      run: dotnet test --no-restore ./bugs/Dima.sln
+#     uses: ./.github/workflows/build-and-test.yml
+#     with:
+#       solution-path: ./bugs/Dima.sln
+#       so: windows-latest
 
 #   balta:
 #     uses: ./.github/workflows/build-and-test.yml
