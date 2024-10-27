@@ -20,17 +20,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.ConfigureDevEnvironment();
 
-//if (app.Environment.IsEnvironment(Configuration.E2ETestEnv))
-//{
-using (var Scope = app.Services.CreateScope())
+var shouldApplyMigrations = Environment.GetEnvironmentVariable(Configuration.E2ETestEnv);
+if (shouldApplyMigrations is not null && shouldApplyMigrations == "true")
 {
-    Configuration.ConnectionString = "Server=127.0.0.1,37000;Database=dimadb;User Id=sa;Password=somePassw0rd!;TrustServerCertificate=True";
-    var context = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.Migrate();
+    using (var Scope = app.Services.CreateScope())
+    {
+        Configuration.ConnectionString = "Server=127.0.0.1,37000;Database=dimadb;User Id=sa;Password=somePassw0rd!;TrustServerCertificate=True";
+        var context = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        context.Database.Migrate();
 
+    }
 }
-//}
-//app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseCors(ApiConfiguration.CorsPolicyName);
 app.UseSecurity();

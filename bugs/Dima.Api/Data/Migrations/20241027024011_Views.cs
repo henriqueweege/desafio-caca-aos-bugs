@@ -10,8 +10,7 @@ namespace Dima.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql
-            (@"
+            migrationBuilder.Sql(@"
                 CREATE OR ALTER VIEW [vwGetExpensesByCategory] AS
                     SELECT
                         [Transaction].[UserId],
