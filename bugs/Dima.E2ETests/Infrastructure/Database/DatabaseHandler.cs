@@ -7,7 +7,7 @@ public class DatabaseHandler
 {
     private static readonly MsSqlContainer Container = new MsSqlBuilder()
                             .WithPassword("somePassw0rd!")
-                            .WithImage("mcr.microsoft.com/mssql/server:2019-latest-windowsservercore-ltsc2019")
+                            .WithImage("clearlife/ms-sql-express-2019-win-2022")
                             .WithPortBinding(37000, 1433)
                             .Build();
 
