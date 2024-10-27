@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.DataProtection;
+
 namespace Dima.Api.Common.Api;
 
 public static class AppExtension

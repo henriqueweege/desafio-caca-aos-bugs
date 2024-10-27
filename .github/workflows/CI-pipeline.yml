@@ -1,0 +1,19 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  dima-ci:
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      solution-path: ./bugs/Dima.sln
+      so: windows-latest
+
+  balta-ci:
+    uses: ./.github/workflows/build-and-test.yml
+    with:
+      solution-path: ./unit-tests/Balta.sln
+      so: ubuntu-latest
