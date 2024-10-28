@@ -7,12 +7,15 @@
     <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator/>
 
-        <MudTextField Label="Título"
+        <MudTextField 
+                      id="title"
+                      Label="Título"
                       HelperText="Campo obrigatório"
                       @bind-Value="InputModel.Title"
                       For="@(() => InputModel.Title)"/>
 
-        <MudTextField Label="Quanto?"
+        <MudTextField id="amount"
+                      Label="Quanto?"
                       T="decimal"
                       Format="C"
                       Variant="Variant.Text"
@@ -20,36 +23,42 @@
                       @bind-Value="InputModel.Amount"
                       For="@(() => InputModel.Amount)"/>
 
-        <MudDatePicker Label="Quando?"
+        <MudDatePicker id="paidOrReceivedAt"
+                       Label="Quando?"
                        @bind-Date="@InputModel.PaidOrReceivedAt"
                        HelperText="Selecione a data que o valor será pago ou recebido"/>
         
-        <MudSelect T="ETransactionType"
+        <MudSelect 
+                   id="type"
+                   T="ETransactionType"
                    Label="Tipo de Movimentação"
                    AnchorOrigin="Origin.BottomCenter"
                    @bind-Value="InputModel.Type">
-            <MudSelectItem T="ETransactionType" Value="ETransactionType.Deposit">
+            <MudSelectItem id="deposit" T="ETransactionType" Value="ETransactionType.Deposit">
                 Entrada
             </MudSelectItem>
-            <MudSelectItem T="ETransactionType" Value="ETransactionType.Withdraw">
+            <MudSelectItem id="withdraw" T="ETransactionType" Value="ETransactionType.Withdraw">
                 Saída
             </MudSelectItem>
         </MudSelect>
         
         <MudSelect 
+            id="category"
             T="long" 
             Label="Categoria" 
             @bind-Value="InputModel.CategoryId"
             AnchorOrigin="Origin.BottomCenter">
             @foreach (var category in Categories)
             {
-                <MudSelectItem T="long" Value="@category.Id">
+                <MudSelectItem id="@category.Title" T="long" Value="@category.Id">
                     @category.Title
                 </MudSelectItem>
             }
         </MudSelect>
         
-        <MudButton ButtonType="ButtonType.Submit"
+        <MudButton
+                   id="submit"
+                   ButtonType="ButtonType.Submit"
                    Variant="Variant.Filled"
                    Color="Color.Primary"
                    Class="mt-4">

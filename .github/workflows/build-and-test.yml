@@ -1,4 +1,4 @@
-name: Build Solution
+name: Build and Test
 
 on:
   workflow_call:
@@ -6,6 +6,7 @@ on:
       solution-path:
         required: true
         type: string
+
 
 jobs:
   build-and-test:

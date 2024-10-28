@@ -18,8 +18,8 @@ public class EmailTests
         _dateTimeProviderMock.Setup(x=>x.ExpirationDate).Returns(DateTime.UtcNow);
     }
 
-    [Fact]
-    public void GivenEmailWithValidFormatAndUpperCase_ShouldCreate_ShouldLowerCaseEmail() //ShouldLowerCaseEmail
+    [Fact(DisplayName = "ShouldLowerCaseEmail")]
+    public void GivenEmailWithValidFormatAndUpperCase_ShouldCreate_ShouldLowerCaseEmail()
     {
         // Arrange
         var upperCase = _emailForTests.ToUpper();
@@ -28,12 +28,14 @@ public class EmailTests
         var email = Email.ShouldCreate(upperCase, _dateTimeProviderMock.Object);
 
         // Assert
-        email.Address.Should().NotBeUpperCased();
+        email.Address
+            .Should()
+            .NotBeUpperCased();
     }
 
 
-    [Fact]
-    public void GivenEmailWithValidFormatAndBlankSpaceInTheBeginAndEnd_ShouldCreate_ShouldTrimEmail() //ShouldTrimEmail
+    [Fact(DisplayName = "ShouldTrimEmail")]
+    public void GivenEmailWithValidFormatAndBlankSpaceInTheBeginAndEnd_ShouldCreate_ShouldTrimEmail()
     {
         // Arrange
         var emailWithWhiteSpaces = $" {_emailForTests} ";
@@ -42,52 +44,72 @@ public class EmailTests
         var email = Email.ShouldCreate(emailWithWhiteSpaces, _dateTimeProviderMock.Object);
 
         // Assert
-        email.Address.First().Should().NotBe(' ');
-        email.Address.Last().Should().NotBe(' ');
+        email.Address
+            .First()
+            .Should()
+            .NotBe(' ');
+
+        email.Address
+            .Last()
+            .Should()
+            .NotBe(' ');
     }
 
 
-    [Fact]
-    public void GivenNullEmail_ShouldCreate_ShouldThrowNullReferenceException() //ShouldFailIfEmailIsNull
+    [Fact(DisplayName = "ShouldFailIfEmailIsNull")]
+    public void GivenNullEmail_ShouldCreate_ShouldThrowNullReferenceException() 
     {
         // Arrange
         // Act
         var shouldCreate = () => Email.ShouldCreate(null, _dateTimeProviderMock.Object);
 
         // Assert
-        shouldCreate.Should().Throw<NullReferenceException>();
+        shouldCreate
+            .Should()
+            .Throw<NullReferenceException>();
     }
 
     
-    [Theory]
+    [Theory(DisplayName = "ShouldFailIfEmailIsInvalid ShouldFailIfEmailIsEmpty")]
     [InlineData("notAValidEmail")]
     [InlineData("")]
-    public void GivenInvalidEmail_ShouldCreate_ShouldThrowInvalidEmailException(string testCase) //ShouldFailIfEmailIsInvalid //ShouldFailIfEmailIsEmpty
+    public void GivenInvalidEmail_ShouldCreate_ShouldThrowInvalidEmailException(string testCase)
     {
         // Arrange
         // Act
         var shouldCreate = () => Email.ShouldCreate(testCase, _dateTimeProviderMock.Object);
 
         // Assert
-        shouldCreate.Should().Throw<InvalidEmailException>();
+        shouldCreate
+            .Should()
+            .Throw<InvalidEmailException>();
     }
 
 
-    [Fact]
-    public void GivenValidEmail_ShouldCreate_ShouldReturnEmail() //ShouldPassIfEmailIsValid
+    [Fact(DisplayName = "ShouldPassIfEmailIsValid")]
+    public void GivenValidEmail_ShouldCreate_ShouldReturnEmail()
     {
         // Arrange
         // Act
         var email = Email.ShouldCreate(_emailForTests, _dateTimeProviderMock.Object);
 
         // Assert
-        email.Should().NotBeNull().And.BeOfType<Email>();
-        email.Address.Should().NotBeNullOrEmpty().And.NotBeNullOrWhiteSpace();
+        email.Should()
+            .NotBeNull()
+            .And
+            .BeOfType<Email>();
+        
+        
+        email.Address
+            .Should()
+            .NotBeNullOrEmpty()
+            .And
+            .NotBeNullOrWhiteSpace();
     }
 
 
-    [Fact]
-    public void GivenValidEmail_ShouldCreate_ShouldHashEmailAddress()
+    [Fact(DisplayName = "ShouldHashEmailAddress")]
+    public void GivenValidEmail_ShouldCreate_ShouldHashEmailAddress() 
     {
         // Arrange
         // Act
@@ -95,11 +117,15 @@ public class EmailTests
 
 
         // Assert
-        email.Hash.Should().NotBeNullOrEmpty().And.NotBeNullOrWhiteSpace(); 
+        email.Hash
+            .Should()
+            .NotBeNullOrEmpty()
+            .And
+            .NotBeNullOrWhiteSpace(); 
     }
     
-    [Fact]
-    public void GivenValidEmail_ExplicitConvertFromString_ShouldConvertCorrectly() //ShouldExplicitConvertFromString
+    [Fact(DisplayName = "ShouldExplicitConvertFromString")]
+    public void GivenValidEmail_ExplicitConvertFromString_ShouldConvertCorrectly()
     {
         // Arrange
         // Act
@@ -107,11 +133,12 @@ public class EmailTests
 
         // Assert
         asEmail.Should().NotBeNull();
+
         asEmail.Address.Should().Be(_emailForTests);
     }
 
-    [Fact]
-    public void GivenValidEmail_ExplicitConvertToString_ShouldConvertCorrectly() //ShouldExplicitConvertToString
+    [Fact(DisplayName = "ShouldExplicitConvertToString")]
+    public void GivenValidEmail_ExplicitConvertToString_ShouldConvertCorrectly()
     {
         // Arrange
         var email = Email.ShouldCreate(_emailForTests, _dateTimeProviderMock.Object);
@@ -126,8 +153,8 @@ public class EmailTests
 
     }
 
-    [Fact]
-    public void GivenValidEmail_ToString_ShouldConvertCorrectly()//ShouldReturnEmailWhenCallToStringMethod
+    [Fact(DisplayName = "ShouldReturnEmailWhenCallToStringMethod")]
+    public void GivenValidEmail_ToString_ShouldConvertCorrectly()
     {
         // Arrange
         var email = Email.ShouldCreate(_emailForTests, _dateTimeProviderMock.Object);

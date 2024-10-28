@@ -17,7 +17,7 @@
             <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
                 <DataAnnotationsValidator/>
 
-                <MudTextField
+                <MudTextField id="email"
                     T="string"
                     Label="E-mail"
                     HelperText="Campo obrigatório"
@@ -25,7 +25,7 @@
                     For="@(() => InputModel.Email)"
                     @bind-Value="InputModel.Email"/>
 
-                <MudTextField
+                <MudTextField id="password"
                     T="string"
                     Label="Senha"
                     HelperText="Campo obrigatório"
@@ -40,7 +40,7 @@
                     }
                     else
                     {
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">COMEÇAR</MudButton>
+                        <MudButton id="submit" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">COMEÇAR</MudButton>
                         <MudSpacer/>
                         <MudButton Href="/login">JÁ TENHO UMA CONTA</MudButton>
                     }

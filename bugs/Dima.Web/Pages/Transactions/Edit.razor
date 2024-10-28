@@ -7,7 +7,8 @@
     <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator/>
 
-        <MudTextField Label="Título"
+        <MudTextField id="title"
+                      Label="Título"
                       HelperText="Campo obrigatório"
                       @bind-Value="InputModel.Title"
                       For="@(() => InputModel.Title)"/>
@@ -49,7 +50,9 @@
             }
         </MudSelect>
         
-        <MudButton ButtonType="ButtonType.Submit"
+        <MudButton
+                   id="submit"
+                   ButtonType="ButtonType.Submit"
                    Variant="Variant.Filled"
                    Color="Color.Primary"
                    Class="mt-4">

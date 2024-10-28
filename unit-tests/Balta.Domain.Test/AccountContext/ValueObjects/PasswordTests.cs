@@ -9,22 +9,24 @@ public class PasswordTests
     private static string ValidPassword = "df6d8caf15fa";
     private const string Special = "!@#$%ˆ&*(){}[];";
 
-    [Theory]
+    [Theory(DisplayName = "ShouldFailIfPasswordIsNull ShouldFailIfPasswordIsEmpty ShouldFailIfPasswordIsWhiteSpace")]
     [InlineData(null)]
     [InlineData("")]
     [InlineData(" ")]
-    public void GivenInvalidPassword_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage(string password)//ShouldFailIfPasswordIsNull ShouldFailIfPasswordIsEmpty ShouldFailIfPasswordIsWhiteSpace
+    public void GivenInvalidPassword_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage(string password)
     {
         // Arrange
         // Act
         var create = () => Password.ShouldCreate(password);
 
         // Assert
-        create.Should().ThrowExactly<InvalidPasswordException>().WithMessage("Password cannot be null or empty");
+        create.Should()
+            .ThrowExactly<InvalidPasswordException>()
+            .WithMessage("Password cannot be null or empty");
     }
 
-    [Fact]
-    public void GivenPasswordShorterThanAllowed_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage() //ShouldFailIfPasswordLenIsLessThanMinimumChars
+    [Fact(DisplayName = "ShouldFailIfPasswordLenIsLessThanMinimumChars")]
+    public void GivenPasswordShorterThanAllowed_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage()
     {
         // Arrange
         var password = "xpto";
@@ -33,12 +35,14 @@ public class PasswordTests
         var create = () => Password.ShouldCreate(password);
 
         // Assert
-        create.Should().ThrowExactly<InvalidPasswordException>().WithMessage("Password should have at least 8 characters");
+        create.Should()
+            .ThrowExactly<InvalidPasswordException>()
+            .WithMessage("Password should have at least 8 characters");
     }
 
 
-    [Fact]
-    public void GivenPasswordLargerThanAllowed_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage() //ShouldFailIfPasswordLenIsGreaterThanMaxChars
+    [Fact(DisplayName = "ShouldFailIfPasswordLenIsGreaterThanMaxChars")]
+    public void GivenPasswordLargerThanAllowed_ShouldCreate_ShouldThrowInvalidPasswordExceptionWithMessage() 
     {
         // Arrange
         var password = new string('a', 49);
@@ -47,12 +51,14 @@ public class PasswordTests
         var create = () => Password.ShouldCreate(password);
 
         // Assert
-        create.Should().ThrowExactly<InvalidPasswordException>().WithMessage("Password should have less than 48 characters");
+        create.Should()
+            .ThrowExactly<InvalidPasswordException>()
+            .WithMessage("Password should have less than 48 characters");
 
     }
 
-    [Fact]
-    public void GivenValidPassword_ShouldCreate_ShouldHashPassword()//ShouldHashPassword
+    [Fact(DisplayName = "ShouldHashPassword")]
+    public void GivenValidPassword_ShouldCreate_ShouldHashPassword()
     {
         // Arrange
         // Act
@@ -60,11 +66,16 @@ public class PasswordTests
 
         // Assert
         hash.Should().NotBeNull();
-        hash.Hash.Should().NotBeNullOrEmpty().And.NotBeNullOrWhiteSpace();
+
+        hash.Hash
+            .Should()
+            .NotBeNullOrEmpty()
+            .And
+            .NotBeNullOrWhiteSpace();
     }
 
-    [Fact]
-    public void GivenValidPassword_ShouldVerify_ShouldNotThrowException()//ShouldHashPassword
+    [Fact(DisplayName = "ShouldVerifyPasswordHash")]
+    public void GivenValidPassword_ShouldVerify_ShouldNotThrowException()
      {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -76,8 +87,8 @@ public class PasswordTests
         res.Should().NotThrow();
     }
 
-    [Fact]
-    public void GivenHashAndCorrectPassword_ShouldMatch_ShouldReturnTrue()//ShouldVerifyPasswordHash
+    [Fact(DisplayName = "ShouldVerifyPasswordHash")]
+    public void GivenHashAndCorrectPassword_ShouldMatch_ShouldReturnTrue()//
     {
         // Arrange
         var hash = Password.ShouldCreate(ValidPassword).Hash;
@@ -89,9 +100,8 @@ public class PasswordTests
         match.Should().BeTrue();
     }
 
-    [Theory]
-    [MemberData(nameof(GetMismatchScenarios))]
-    public void GivenMismatchBetweenHashAndPassword_ShouldMatch_ShouldReturnFalse(string hash, string password)//ShouldVerifyPasswordHash
+    [Theory(DisplayName = "ShouldVerifyPasswordHash"), MemberData(nameof(GetMismatchScenarios))]
+    public void GivenMismatchBetweenHashAndPassword_ShouldMatch_ShouldReturnFalse(string hash, string password)
     {
         // Arrange
         // Act
@@ -101,9 +111,8 @@ public class PasswordTests
         match.Should().BeFalse();
     }
 
-    [Theory]
-    [MemberData(nameof(GetShouldGenerateScenarios))]
-    public void ShouldGenerateStrongPassword(short length, bool includeSpecialChars, bool upperCase)
+    [Theory(DisplayName = "ShouldGenerateStrongPassword"), MemberData(nameof(GetShouldGenerateScenarios))]    
+    public void GivenValidParameters_ShouldGenerate_ShouldGenerateStrongPassword(short length, bool includeSpecialChars, bool upperCase)
     {
         // Arrange
         // Act
@@ -111,12 +120,19 @@ public class PasswordTests
 
         // Assert
         password.Should().HaveLength(length);
-        password.Any(x => Special.Contains(x)).Should().Be(includeSpecialChars);
-        password.Any(x => char.IsAsciiLetterUpper(x)).Should().Be(upperCase);
+
+        password
+            .Any(x => Special.Contains(x))
+            .Should()
+            .Be(includeSpecialChars);
+
+        password
+            .Any(x => char.IsAsciiLetterUpper(x))
+            .Should().Be(upperCase);
     }
 
-    [Fact]
-    public void GivenPassword_ImplicitConvertToString_ShouldConvert() // ShouldImplicitConvertToString 
+    [Fact(DisplayName = "ShouldImplicitConvertToString")]
+    public void GivenPassword_ImplicitConvertToString_ShouldConvert()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -133,8 +149,8 @@ public class PasswordTests
             .Be(password.Hash);
     }
 
-    [Fact]
-    public void GivenPassword_ToString_ShouldReturnHashAsString()//ShouldReturnHashAsStringWhenCallToStringMethod
+    [Fact(DisplayName = "ShouldReturnHashAsStringWhenCallToStringMethod")]
+    public void GivenPassword_ToString_ShouldReturnHashAsString()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -151,8 +167,8 @@ public class PasswordTests
             .Be(password.Hash);
     }
 
-    [Fact]
-    public void GivenPassword_MarkAsExpired_ShouldMakeIsActiveReturnFalse()//ShouldMarkPasswordAsExpired
+    [Fact(DisplayName = "ShouldMarkPasswordAsExpired")]
+    public void GivenPassword_MarkAsExpired_ShouldMakeIsActiveReturnFalse()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -164,8 +180,8 @@ public class PasswordTests
         password.VerificationCode.IsActive.Should().BeFalse();
     }
 
-    [Fact]
-    public void GivenExpiredPassword_ShouldVerify_ShouldThrowException()//ShouldFailIfPasswordIsExpired
+    [Fact(DisplayName = "ShouldFailIfPasswordIsExpired")]
+    public void GivenExpiredPassword_ShouldVerify_ShouldThrowException()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -175,12 +191,13 @@ public class PasswordTests
         var shouldVerify = () => password.ShouldVerify();
 
         // Assert
-        shouldVerify.Should().Throw<InvalidVerificationCodeException>();
+        shouldVerify.Should()
+            .Throw<InvalidVerificationCodeException>();
     }
 
 
-    [Fact]
-    public void GivenPassword_PasswordMustChange_ShouldMarkPasswordAsMustChange()//ShouldMarkPasswordAsMustChange
+    [Fact(DisplayName = "ShouldMarkPasswordAsMustChange")]
+    public void GivenPassword_PasswordMustChange_ShouldMarkPasswordAsMustChange()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -193,8 +210,8 @@ public class PasswordTests
     }
 
 
-    [Fact]
-    public void GivenPasswordThatMustChange_ShouldVerify_ShouldThrowException()//ShouldFailIfPasswordIsMarkedAsMustChange
+    [Fact(DisplayName = "ShouldFailIfPasswordIsMarkedAsMustChange")]
+    public void GivenPasswordThatMustChange_ShouldVerify_ShouldThrowException()
     {
         // Arrange
         var password = Password.ShouldCreate(ValidPassword);
@@ -204,7 +221,8 @@ public class PasswordTests
         var shouldVerify = () => password.ShouldVerify();
 
         // Assert
-        shouldVerify.Should().Throw<InvalidVerificationCodeException>();
+        shouldVerify.Should()
+            .Throw<InvalidVerificationCodeException>();
     }
 
     public static IEnumerable<object[]> GetMismatchScenarios()
@@ -220,5 +238,4 @@ public class PasswordTests
         yield return new object[] { 43, true, false };
         yield return new object[] { 10, true, true };
     }
-
 }

@@ -6,18 +6,23 @@
     <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator/>
 
-        <MudTextField Label="Título"
+        <MudTextField
+                      id="title" 
+                      Label="Título"
                       HelperText="Campo obrigatório"
                       @bind-Value="InputModel.Title"
                       For="@(() => InputModel.Title)"/>
 
-        <MudTextField Label="Descição"
+        <MudTextField id="description"
+                      Label="Descição"
                       Lines="5"
                       HelperText="Campo obrigatório"
                       @bind-Value="InputModel.Description"
                       For="@(() => InputModel.Description)"/>
 
-        <MudButton ButtonType="ButtonType.Submit"
+        <MudButton
+                   id="submit"
+                   ButtonType="ButtonType.Submit"
                    Variant="Variant.Filled"
                    Color="Color.Primary">
             Salvar
