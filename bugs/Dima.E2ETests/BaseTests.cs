@@ -26,7 +26,7 @@ public partial class E2ETest
 
     private static async Task Wait()
     {
-        await Task.Delay(2000);
+        await Task.Delay(5000);
     }
 
     private async Task FindByIdAndClick(string idOfElement)
