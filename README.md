@@ -23,12 +23,14 @@ Depuração e solução de bugs, pensamento crítico e analítico, segurança e 
 * Minimal APIs
 * Blazor Web Assembly
 * xUnit
+* Testcontainers
+* Selenium WebDriver
 
 ## 🥋 Skills Desenvolvidas
 * Comunicação
 * Trabalho em Equipe
 * Networking
-* Muito conhecimento técnico
+* Muito (muito mesmo) conhecimento técnico
 
 ## 🧪 Como testar o projeto
 [DESCREVER COMO EXECUTAR O PROJETO]
