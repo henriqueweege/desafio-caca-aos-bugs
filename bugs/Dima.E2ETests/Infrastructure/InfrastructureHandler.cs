@@ -17,8 +17,8 @@ namespace Dima.E2ETests.Infrastructure
             {
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
 
-                //DatabaseHandler.StartAsync().GetAwaiter().GetResult();
-                
+                DatabaseHandler.StartAsync().GetAwaiter().GetResult();
+
                 WebAppHandler.RunWebApp();
                 ApiHandler.RunApi();
 

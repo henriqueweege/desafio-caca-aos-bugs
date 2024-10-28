@@ -11,15 +11,8 @@ on:
 jobs:
   dima:
     # runs-on: windows-2022
-    runs-on: windows-2019
-    services:
-        mssql:
-          image: mcr.microsoft.com/mssql/server:2019-latest
-          ports:
-            - 37000:1433
-          env:
-            ACCEPT_EULA: Y
-            SA_PASSWORD: somePassw0rd!
+    # runs-on: windows-2019
+    runs-on: windows-latest
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
