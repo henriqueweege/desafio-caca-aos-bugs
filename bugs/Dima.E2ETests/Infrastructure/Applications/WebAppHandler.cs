@@ -8,9 +8,9 @@ internal sealed class WebAppHandler
 
     private static ApplicationRunner applicationRunner = new();
 
-    public static async Task RunWebApp()
+    public static void RunWebApp()
     {
-        await applicationRunner.Run("dotnet run --project ../../../../Dima.Web/Dima.Web.csproj");
+        applicationRunner.Run("dotnet run --project ../../../../Dima.Web/Dima.Web.csproj");
     }
 
     public static void DisposeApp()

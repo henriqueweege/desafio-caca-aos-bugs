@@ -6,7 +6,7 @@ internal class ApplicationRunner
 {
     private Process process;
 
-    internal async Task Run(string applicationPath)
+    internal void Run(string applicationPath)
     {
         ProcessStartInfo processInfo;
 

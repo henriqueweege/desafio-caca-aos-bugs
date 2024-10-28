@@ -5,10 +5,10 @@ namespace Dima.E2ETests.Infrastructure.Applications;
 internal sealed class ApiHandler
 {
     private static ApplicationRunner applicationRunner = new();
-    public static async Task RunApi()
+    public static void RunApi()
     {
-        await applicationRunner.Run("dotnet run --project ../../../../Dima.Api/Dima.Api.csproj");
         Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
+        applicationRunner.Run("dotnet run --project ../../../../Dima.Api/Dima.Api.csproj");
     }
     public static void DisposeApp()
     {

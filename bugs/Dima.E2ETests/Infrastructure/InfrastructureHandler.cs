@@ -17,14 +17,13 @@ namespace Dima.E2ETests.Infrastructure
             {
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
                 DatabaseHandler.StartAsync().GetAwaiter().GetResult();
+                WebAppHandler.RunWebApp();
+                ApiHandler.RunApi();
 
-                Task.WhenAll(WebAppHandler.RunWebApp(), ApiHandler.RunApi())
-                    .GetAwaiter()
-                    .GetResult();
 
                 _driver = new ChromeDriver();
 
-                Task.Delay(20000).Wait();
+                Thread.Sleep(20000);
                 NeedsSetup = false;
             } 
         }
