@@ -60,11 +60,12 @@ Caso queira testar através dos testes E2E **OUTROS SO**:
 1. Clonar o projeto;
 2. Estar com banco de dados rodando;
 3. Comentar as seguintes linhas **18, 20 e 21** da classe **InfrastructureHandler** do projeto **Dima.E2ETests**:
+   
    ![image](https://github.com/user-attachments/assets/f2270702-4143-48af-9eb9-06f41fc1fc54)
 
-5. Rodar o Docker;
-6. Definir a connection string e a flag "ShouldRunMigrations" como true no appsettings.json do projeto Dima.Api
-7. Executar ambos os projeto Balta.Domain.Test:
+4. Rodar o Docker;
+5. Definir a connection string e a flag "ShouldRunMigrations" como true no appsettings.json do projeto Dima.Api
+6. Executar ambos os projeto Balta.Domain.Test:
    - dotnet clean
    - dotnet restore
    - dotnet build
@@ -74,6 +75,7 @@ Caso queira testar através dos testes E2E **OUTROS SO**:
 **IMPORTANTE**
 O projeto de testes E2E foi desenvolvido pensando na pipeline de CI e faltam processos de CleanUp. Se for rodar local, é necessário encerrar os processos manualmente depois de rodar.
 Caso queira ver o Selenium realizar os passos comente a linha 23 da classe **InfrastructureHandler** do projeto **Dima.E2ETests**
+
 ![image](https://github.com/user-attachments/assets/6d559e19-5660-4fed-a37b-449a43500666)
 
 
