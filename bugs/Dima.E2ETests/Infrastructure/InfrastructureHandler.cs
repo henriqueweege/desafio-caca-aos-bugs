@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using System.Diagnostics;
+using CreditAccountingService.FunctionalTests;
 
 namespace Dima.E2ETests.Infrastructure
 {
@@ -17,6 +18,7 @@ namespace Dima.E2ETests.Infrastructure
         {
             if(NeedsSetup)
             {
+                ContainerKiller.KillUpContainers();
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
 
                 DatabaseHandler.StartAsync().GetAwaiter().GetResult();
@@ -29,13 +31,6 @@ namespace Dima.E2ETests.Infrastructure
                 Thread.Sleep(20000);
                 NeedsSetup = false;
             } 
-        }
-
-        public static void DisposeInfrastructure()
-        {
-            Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, null);
-            WebAppHandler.DisposeApp();
-            ApiHandler.DisposeApp();
         }
     }
 }

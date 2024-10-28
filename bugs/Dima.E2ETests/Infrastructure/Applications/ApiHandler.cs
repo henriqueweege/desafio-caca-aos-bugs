@@ -8,10 +8,7 @@ internal sealed class ApiHandler
     public static void RunApi()
     {
         Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
-        applicationRunner.Run("dotnet run --project ../../../../Dima.Api/Dima.Api.csproj");
-    }
-    public static void DisposeApp()
-    {
-        applicationRunner.Dispose();
+        // applicationRunner.Run("dotnet run --project ../../../../Dima.Api/Dima.Api.csproj");
+        applicationRunner.Run("../../../../Dima.Api/Dima.Api.csproj");
     }
 }

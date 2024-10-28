@@ -6,14 +6,11 @@ on:
       solution-path:
         required: true
         type: string
-      so:
-        required: true
-        type: string
 
 
 jobs:
   build-and-test:
-    runs-on: ${{ inputs.so }}
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
