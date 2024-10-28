@@ -46,7 +46,7 @@ Caso queira testar manualmente:
    - dotnet build
    - dotnet run
 
-Caso queira testar através dos testes E2E **WINDOWS E LINUX**:
+Caso queira testar através dos testes E2E -> **WINDOWS E LINUX**:
 1. Clonar o projeto;
 2. Caso não tenha o Docker instalado, instalar;
 3. Rodar o Docker;
@@ -57,7 +57,7 @@ Caso queira testar através dos testes E2E **WINDOWS E LINUX**:
    - dotnet build
    - dotnet test
 
-Caso queira testar através dos testes E2E **OUTROS SO**:
+Caso queira testar através dos testes E2E -> **OUTROS SO**:
 1. Clonar o projeto;
 2. Estar com banco de dados rodando;
 3. Comentar as seguintes linhas **18, 20 e 21** da classe **InfrastructureHandler** do projeto **Dima.E2ETests**:
