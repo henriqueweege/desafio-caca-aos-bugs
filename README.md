@@ -23,6 +23,8 @@ Henrique Weege - https://github.com/henriqueweege
 * Minimal APIs
 * Blazor Web Assembly
 * xUnit
+* Selenium WebDriver
+* Testcontainers
 
 ## 🥋 Skills Desenvolvidas
 * Comunicação
