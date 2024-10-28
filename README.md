@@ -73,8 +73,10 @@ Caso queira testar através dos testes E2E **OUTROS SO**:
 
 
 **IMPORTANTE**
-O projeto de testes E2E foi desenvolvido pensando na pipeline de CI e faltam processos de CleanUp. Se for rodar local, é necessário encerrar os processos manualmente depois de rodar.
-Caso queira ver o Selenium realizar os passos comente a linha 23 da classe **InfrastructureHandler** do projeto **Dima.E2ETests**
+
+
+O projeto de testes E2E foi desenvolvido pensando na pipeline de CI e faltam processos de CleanUp. Se for rodar local, é necessário encerrar os processos da Api e Web manualmente depois dos testes.
+Caso queira ver o Selenium realizar os passos, comente a linha 23 da classe **InfrastructureHandler** do projeto **Dima.E2ETests**
 
 ![image](https://github.com/user-attachments/assets/6d559e19-5660-4fed-a37b-449a43500666)
 
