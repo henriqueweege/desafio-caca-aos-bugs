@@ -22,8 +22,10 @@ namespace Dima.E2ETests.Infrastructure
                 WebAppHandler.RunWebApp();
                 ApiHandler.RunApi();
 
-                _driver = new ChromeDriver();
-
+                var chromeOpt = new ChromeOptions();
+                chromeOpt.AddArgument("-headless");
+                _driver = new ChromeDriver(chromeOpt);
+                
                 Thread.Sleep(20000);
                 NeedsSetup = false;
             } 
