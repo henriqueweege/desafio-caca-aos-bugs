@@ -3,6 +3,8 @@ using Dima.E2ETests.Infrastructure.Applications;
 using Dima.E2ETests.Infrastructure.Database;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using System.Diagnostics;
 
 namespace Dima.E2ETests.Infrastructure
 {
@@ -17,7 +19,15 @@ namespace Dima.E2ETests.Infrastructure
             {
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
 
-                DatabaseHandler.StartAsync().GetAwaiter().GetResult();
+                //DatabaseHandler.StartAsync().GetAwaiter().GetResult();
+
+                ProcessStartInfo processInfo;
+
+                processInfo = new ProcessStartInfo("docker build -t dockerfile . docker run -d -p 37000:1433 --name my-mssql-container dockerfile");
+                processInfo.UseShellExecute = true;
+
+                Process.Start(processInfo);
+
 
                 WebAppHandler.RunWebApp();
                 ApiHandler.RunApi();

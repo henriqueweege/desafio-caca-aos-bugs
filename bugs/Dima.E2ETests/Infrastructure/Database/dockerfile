@@ -1,0 +1,15 @@
+﻿# Use the official Microsoft SQL Server image from Docker Hub
+FROM mcr.microsoft.com/mssql/server:2019-latest
+
+# Set environment variables
+ENV ACCEPT_EULA=Y
+ENV SA_PASSWORD=somePassw0rd!
+
+# Expose the SQL Server port
+EXPOSE 1433
+
+# Create a directory for database files (optional)
+RUN mkdir -p /var/opt/mssql/data
+
+# Set the default command to start SQL Server
+CMD ["/opt/mssql/bin/sqlservr"]
