@@ -34,7 +34,8 @@ Henrique Weege - https://github.com/henriqueweege
 
 ## 🧪 Como testar o projeto
 
-**Dima**
+**Testar o projeto Dima**
+
 Caso queira testar manualmente:
 1. Clonar o projeto;
 2. Caso esteja com o banco de dados criado, deletar;
@@ -81,7 +82,8 @@ Caso queira ver o Selenium realizar os passos, comente a linha 23 da classe **In
 ![image](https://github.com/user-attachments/assets/6d559e19-5660-4fed-a37b-449a43500666)
 
 
-**Balta**
+**Testar o projeto Balta**
+
 1. Clonar o projeto;
 2. Executar ambos os projeto Dima.E2ETests:
    - dotnet clean
