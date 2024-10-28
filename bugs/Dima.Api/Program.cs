@@ -20,15 +20,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.ConfigureDevEnvironment();
 
-var shouldApplyMigrations = Environment.GetEnvironmentVariable(Configuration.E2ETestEnv);
-if (shouldApplyMigrations is not null && shouldApplyMigrations == "true")
+
+if (builder.Configuration.GetValue<bool>("ShouldRunMigrations"))
 {
     using (var Scope = app.Services.CreateScope())
     {
-        Configuration.ConnectionString = "Server=127.0.0.1,37000;Database=dimadb;User Id=sa;Password=somePassw0rd!;TrustServerCertificate=True";
         var context = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
         context.Database.Migrate();
-
     }
 }
 
