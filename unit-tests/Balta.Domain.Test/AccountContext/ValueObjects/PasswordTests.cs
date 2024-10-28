@@ -1,13 +1,21 @@
 using Balta.Domain.AccountContext.ValueObjects;
 using Balta.Domain.AccountContext.ValueObjects.Exceptions;
+using Balta.Domain.SharedContext.Abstractions;
 using FluentAssertions;
+using Moq;
 
 namespace Balta.Domain.Test.AccountContext.ValueObjects;
 
 public class PasswordTests
 {
+    private readonly Mock<IDateTimeProvider> _dateTimeProviderMock = new Mock<IDateTimeProvider>();
     private static string ValidPassword = "df6d8caf15fa";
     private const string Special = "!@#$%ˆ&*(){}[];";
+
+    public PasswordTests()
+    {
+        _dateTimeProviderMock.Setup(x=>x.ExpirationDate).Returns(DateTime.UtcNow);
+    }
 
     [Theory(DisplayName = "ShouldFailIfPasswordIsNull ShouldFailIfPasswordIsEmpty ShouldFailIfPasswordIsWhiteSpace")]
     [InlineData(null)]
@@ -17,7 +25,7 @@ public class PasswordTests
     {
         // Arrange
         // Act
-        var create = () => Password.ShouldCreate(password);
+        var create = () => Password.ShouldCreate(password, _dateTimeProviderMock.Object);
 
         // Assert
         create.Should()
@@ -32,7 +40,7 @@ public class PasswordTests
         var password = "xpto";
 
         // Act
-        var create = () => Password.ShouldCreate(password);
+        var create = () => Password.ShouldCreate(password, _dateTimeProviderMock.Object);
 
         // Assert
         create.Should()
@@ -48,7 +56,7 @@ public class PasswordTests
         var password = new string('a', 49);
 
         // Act
-        var create = () => Password.ShouldCreate(password);
+        var create = () => Password.ShouldCreate(password, _dateTimeProviderMock.Object);
 
         // Assert
         create.Should()
@@ -62,7 +70,7 @@ public class PasswordTests
     {
         // Arrange
         // Act
-        var hash = Password.ShouldCreate(ValidPassword);
+        var hash = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Assert
         hash.Should().NotBeNull();
@@ -78,7 +86,7 @@ public class PasswordTests
     public void GivenValidPassword_ShouldVerify_ShouldNotThrowException()
      {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         var res = () => password.ShouldVerify();
@@ -135,7 +143,7 @@ public class PasswordTests
     public void GivenPassword_ImplicitConvertToString_ShouldConvert()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         string asString = password;
@@ -153,7 +161,7 @@ public class PasswordTests
     public void GivenPassword_ToString_ShouldReturnHashAsString()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         string hash = password.ToString();
@@ -171,7 +179,7 @@ public class PasswordTests
     public void GivenPassword_MarkAsExpired_ShouldMakeIsActiveReturnFalse()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         password.VerificationCode.Expired();
@@ -184,8 +192,8 @@ public class PasswordTests
     public void GivenExpiredPassword_ShouldVerify_ShouldThrowException()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
-        password.VerificationCode.Expired();
+        _dateTimeProviderMock.Setup(x=>x.ExpirationDate).Returns(DateTime.UtcNow.AddDays(-1));
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         var shouldVerify = () => password.ShouldVerify();
@@ -200,7 +208,7 @@ public class PasswordTests
     public void GivenPassword_PasswordMustChange_ShouldMarkPasswordAsMustChange()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
 
         // Act
         password.PasswordMustChange();
@@ -214,7 +222,7 @@ public class PasswordTests
     public void GivenPasswordThatMustChange_ShouldVerify_ShouldThrowException()
     {
         // Arrange
-        var password = Password.ShouldCreate(ValidPassword);
+        var password = Password.ShouldCreate(ValidPassword, _dateTimeProviderMock.Object);
         password.PasswordMustChange();
 
         // Act
