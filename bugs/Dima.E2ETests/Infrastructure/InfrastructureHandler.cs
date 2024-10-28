@@ -19,15 +19,7 @@ namespace Dima.E2ETests.Infrastructure
             {
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
 
-                //DatabaseHandler.StartAsync().GetAwaiter().GetResult();
-
-                ProcessStartInfo processInfo;
-
-                processInfo = new ProcessStartInfo("docker build -t dockerfile . docker run -d -p 37000:1433 --name my-mssql-container dockerfile");
-                processInfo.UseShellExecute = true;
-
-                Process.Start(processInfo);
-
+                DatabaseHandler.StartAsync().GetAwaiter().GetResult();
 
                 WebAppHandler.RunWebApp();
                 ApiHandler.RunApi();
