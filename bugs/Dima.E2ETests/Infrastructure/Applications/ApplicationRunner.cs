@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using CliWrap;
-using CliWrap.Buffered;
 
 namespace Dima.E2ETests.Infrastructure.Applications;
 
@@ -10,9 +10,23 @@ internal class ApplicationRunner
 
     internal async Task Run(string applicationPath)
     {
-        await Cli
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            ProcessStartInfo processInfo;
+
+            processInfo = new ProcessStartInfo("cmd.exe", $"/K dotnet run --project {applicationPath}");
+            processInfo.UseShellExecute = true;
+
+            Process.Start(processInfo);
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            await Cli
             .Wrap($"dotnet")
-            .WithArguments($"run --project {applicationPath}").ExecuteAsync();
-        
+            .WithArguments($"run --project {applicationPath}")
+            .WithValidation(CommandResultValidation.None)
+            .ExecuteAsync();
+
+        }
     }
 }

@@ -10,7 +10,6 @@ internal sealed class WebAppHandler
 
     public static void RunWebApp()
     {
-        // applicationRunner.Run("dotnet run --project ../../../../Dima.Web/Dima.Web.csproj");
         applicationRunner.Run("../../../../Dima.Web");
     }
 }

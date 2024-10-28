@@ -1,5 +1,6 @@
 ﻿using Dima.E2ETests.ExecutionOrderer;
 using Dima.E2ETests.Infrastructure.Applications;
+using System.Configuration;
 
 namespace Dima.E2ETests;
 
@@ -19,5 +20,6 @@ public partial class E2ETest
 
         // Assert
         Assert.Equal(driver.Url, $"{WebAppHandler.Url}/");
+        Assert.True(ElementExistsById("saldo"));
     }
 }

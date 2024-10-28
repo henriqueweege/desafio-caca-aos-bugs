@@ -28,7 +28,7 @@
                 {
                     @if (Summary.Total > 0)
                     {
-                        <MudText Color="Color.Success" Typo="Typo.h3">
+                        <MudText id="saldo" Color="Color.Success" Typo="Typo.h3">
                             @(ShowValues ? Summary.Total.ToString("C") : "R$ ********")
                         </MudText>
                     }

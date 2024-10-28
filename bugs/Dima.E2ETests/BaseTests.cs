@@ -103,6 +103,7 @@ public partial class E2ETest
     private async Task Submit()
     {
        await FindByIdAndClick("submit");
+       await Wait();
     }
 
     private bool ElementExistsById(string id)
