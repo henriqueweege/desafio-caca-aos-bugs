@@ -16,10 +16,11 @@ namespace Dima.E2ETests.Infrastructure
             if(NeedsSetup)
             {
                 Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
+
                 DatabaseHandler.StartAsync().GetAwaiter().GetResult();
+                
                 WebAppHandler.RunWebApp();
                 ApiHandler.RunApi();
-
 
                 _driver = new ChromeDriver();
 
