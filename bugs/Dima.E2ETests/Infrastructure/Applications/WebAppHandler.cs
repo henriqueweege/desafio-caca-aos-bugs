@@ -12,6 +12,6 @@ internal sealed class WebAppHandler
 
     public static void RunWebApp()
     {
-         applicationRunner.Run(ProjectPath).GetAwaiter().GetResult();
+         applicationRunner.Run(ProjectPath);
     }
 }

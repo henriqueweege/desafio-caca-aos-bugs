@@ -10,6 +10,6 @@ internal sealed class ApiHandler
     public static void RunApi()
     {
         Environment.SetEnvironmentVariable(Configuration.E2ETestEnv, "true");
-        applicationRunner.Run(ProjectPath).GetAwaiter().GetResult();
+        applicationRunner.Run(ProjectPath);
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dima.E2ETests.Infrastructure.Applications.Strategies;
 
-internal class WindowsRunner : IApplicationRunner
+internal class WindowsRunner : IRunnerStrategy
 {
 
     public Task Run(string applicationPath)

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Dima.E2ETests.Infrastructure.Applications.Strategies;
 
-internal class LinuxRunner : IApplicationRunner
+internal class LinuxRunner : IRunnerStrategy
 {
 
     public async Task Run(string applicationPath)

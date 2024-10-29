@@ -7,7 +7,7 @@ namespace Dima.E2ETests.Infrastructure.Applications;
 
 internal class ApplicationRunner
 {
-    private IEnumerable<IApplicationRunner> _runners = new List<IApplicationRunner>()
+    private IEnumerable<IRunnerStrategy> _runners = new List<IRunnerStrategy>()
     {
         new LinuxRunner(), new WindowsRunner()
     };

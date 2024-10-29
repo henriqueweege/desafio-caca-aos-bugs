@@ -2,7 +2,6 @@ using Dima.Api;
 using Dima.Api.Common.Api;
 using Dima.Api.Data;
 using Dima.Api.Endpoints;
-using Dima.Core;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
