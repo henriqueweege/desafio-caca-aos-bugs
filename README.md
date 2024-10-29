@@ -24,6 +24,7 @@ Henrique Weege - https://github.com/henriqueweege
 * Blazor Web Assembly
 * xUnit
 * Selenium WebDriver
+* Docker
 * Testcontainers
 
 ## 🥋 Skills Desenvolvidas
