@@ -85,7 +85,7 @@ Caso queira ver o Selenium realizar os passos, comente a linha 23 da classe **In
 **Testar o projeto Balta**
 
 1. Clonar o projeto;
-2. Executar ambos os projeto Dima.E2ETests:
+2. Executar ambos os projeto Balta.Domain.Test:
    - dotnet clean
    - dotnet restore
    - dotnet build
